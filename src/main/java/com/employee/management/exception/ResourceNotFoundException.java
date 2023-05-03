@@ -3,11 +3,12 @@ package com.employee.management.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException{
-    private static final long serialVersionUID = 1L;
+import java.io.Serializable;
 
-    public ResourceNotFoundException(String message){
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class ResourceNotFoundException extends RuntimeException implements Serializable {
+
+    public ResourceNotFoundException(String message) {
         super(message);
     }
 }

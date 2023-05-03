@@ -1,6 +1,8 @@
 package com.employee.management.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -15,6 +17,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Entity
 @Table
+@AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
 
     @Id
