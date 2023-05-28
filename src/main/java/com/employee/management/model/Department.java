@@ -6,29 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table
+//@Table
+@Table(name = "department")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employee {
-
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Employee> employees;
 
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "email_id")
-    private String emailId;
-
-    @ManyToOne
-    private Department department;
 }

@@ -28,7 +28,7 @@ public class EmployeeController {
         return employeeService.save(employee);
     }
 
-    //Get employee by ìd rest id
+    //Get employee by id rest id
     @GetMapping("/employees/{id}")
     public EmployeeDto getEmployeeById(@PathVariable Long id){
         return employeeService.getEmployeeById(id);
@@ -36,7 +36,7 @@ public class EmployeeController {
 
     //Update employee rest api
     @PutMapping("/employees/{id}")
-    public EmployeeDto updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDetails){
+    public EmployeeDto updateEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeDto employeeDetails){
         return employeeService.updateEmployee(id, employeeDetails);
     }
 
@@ -45,4 +45,11 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);
     }
+
+    //find all employee condition is first name
+    @GetMapping("/employees/find-name")
+    public List<EmployeeDto> findByFirstName(@RequestParam(name = "firstName", required = false) String firstName){
+        return employeeService.findByFirstName(firstName);
+    }
+
 }
