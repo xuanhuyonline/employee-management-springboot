@@ -2,7 +2,9 @@ package com.employee.management.controller;
 
 import com.employee.management.model.EmployeeDto;
 import com.employee.management.service.EmployeeService;
+import com.employee.management.service.IEmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +15,9 @@ import java.util.List;
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
 public class EmployeeController {
+
+//    @Autowired
+//    private IEmployeeService employeeService;
 
     private final EmployeeService employeeService;
 

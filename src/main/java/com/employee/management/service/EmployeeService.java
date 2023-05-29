@@ -1,12 +1,14 @@
 package com.employee.management.service;
 
 
+import com.employee.management.customAnnotation.AuditLog;
 import com.employee.management.exception.ResourceNotFoundException;
 import com.employee.management.model.Department;
 import com.employee.management.model.Employee;
 import com.employee.management.model.EmployeeDto;
 import com.employee.management.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -17,11 +19,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeService {
+public class EmployeeService implements IEmployeeService{
 
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
 
+    @AuditLog(action = "findAll_employees")
+    @Override
     public List<EmployeeDto> findAll() {
 //        return employeeRepository.findAll().stream()
 //                .map(employee -> new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmailId(), employee.getDepartment().getId()))
@@ -32,6 +36,8 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
+    @AuditLog(action = "create_employee")
+    @Override
     public EmployeeDto save(EmployeeDto dto){
         Employee employee = new Employee();
         employee.setFirstName(dto.getFirstName());
@@ -47,12 +53,15 @@ public class EmployeeService {
         return dto;
     }
 
+    @Override
     public EmployeeDto getEmployeeById(Long id){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" +  id));
         return new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmailId(), employee.getDepartment().getId());
     }
 
+    @AuditLog(action = "update_employee")
+    @Override
     public EmployeeDto updateEmployee(Long id, EmployeeDto employeeDetails){
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" +  id));
@@ -69,12 +78,16 @@ public class EmployeeService {
         return new EmployeeDto(updatedEmployee.getId(), updatedEmployee.getFirstName(), updatedEmployee.getLastName(), updatedEmployee.getEmailId(), updatedEmployee.getDepartment().getId());
     }
 
+    @AuditLog(action = "delete_employee")
+    @Override
     public void deleteEmployee(Long id) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
         employeeRepository.delete(employee);
     }
 
+    @AuditLog(action = "findByFirstName_employee")
+    @Override
     public List<EmployeeDto> findByFirstName(String firstName){
         return employeeRepository.findByFirstName(firstName).stream()
                 .map(employee -> new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmailId(), employee.getDepartment().getId()))
