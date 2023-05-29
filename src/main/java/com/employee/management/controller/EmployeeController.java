@@ -2,7 +2,9 @@ package com.employee.management.controller;
 
 import com.employee.management.model.EmployeeDto;
 import com.employee.management.service.EmployeeService;
+import com.employee.management.service.IEmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,6 +15,9 @@ import java.util.List;
 @RequestMapping("/api/v1/")
 @RequiredArgsConstructor
 public class EmployeeController {
+
+//    @Autowired
+//    private IEmployeeService employeeService;
 
     private final EmployeeService employeeService;
 
@@ -50,6 +55,16 @@ public class EmployeeController {
     @GetMapping("/employees/find-name")
     public List<EmployeeDto> findByFirstName(@RequestParam(name = "firstName", required = false) String firstName){
         return employeeService.findByFirstName(firstName);
+    }
+
+    @GetMapping("/employees/find-email")
+    public EmployeeDto findByEmail(@RequestParam(name = "email", required = false) String email){
+        return employeeService.findByEmail(email);
+    }
+
+    @GetMapping("/employees-sort")
+    public List<EmployeeDto> findAllSortedByLastName(){
+        return employeeService.findAllSortedByLastName();
     }
 
 }

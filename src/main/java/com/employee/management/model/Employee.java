@@ -1,5 +1,6 @@
 package com.employee.management.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,9 @@ import javax.validation.constraints.NotNull;
 @Table
 @AllArgsConstructor
 @NoArgsConstructor
+
+@NamedQuery(name = "Employee.findByEmail",
+query = "select e from Employee e where e.email= ?1")
 public class Employee {
 
     @Id
@@ -26,8 +30,8 @@ public class Employee {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email_id")
-    private String emailId;
+    @Column(name = "email")
+    private String email;
 
     @ManyToOne
     private Department department;

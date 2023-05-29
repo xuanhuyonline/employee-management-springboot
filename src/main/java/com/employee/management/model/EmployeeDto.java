@@ -23,7 +23,7 @@ public class EmployeeDto {
     @NotBlank(message = "Last name is mandatory")
     private String lastName;
     @NotBlank(message = "email is mandatory")
-    private String emailId;
+    private String email;
     @Min(value = 1, message = "departmentId can not be less than 1")
     private Long departmentId;
 }
