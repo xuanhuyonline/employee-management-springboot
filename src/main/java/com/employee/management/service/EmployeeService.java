@@ -8,7 +8,6 @@ import com.employee.management.model.Employee;
 import com.employee.management.model.EmployeeDto;
 import com.employee.management.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
@@ -99,12 +98,15 @@ public class EmployeeService implements IEmployeeService{
     @AuditLog(action = "findByEmail_employee")
     @Override
     public EmployeeDto findByEmail(String email) {
+        email = email.toLowerCase();
         Employee employee = employeeRepository.findByEmail(email);
         if (employee == null) {
             throw new ResourceNotFoundException("Employee not found with email :" + email);
         }
-        return new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(),
-                employee.getDepartment().getId());
+//        return new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(), employee.getEmail(),
+//                employee.getDepartment().getId());
+        EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
+        return employeeDto;
     }
 
     @AuditLog(action = "findAllSortedByLastName_employee")

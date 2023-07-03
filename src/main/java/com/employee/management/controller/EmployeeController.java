@@ -19,7 +19,7 @@ public class EmployeeController {
 //    @Autowired
 //    private IEmployeeService employeeService;
 
-    private final EmployeeService employeeService;
+    private final IEmployeeService employeeService;
 
     //get all employees
     @GetMapping("/employees")
